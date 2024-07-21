@@ -1,0 +1,5 @@
+select count(order_id) as num_of_orders,
+count(distinct user_id) as num_of_users,
+round (sum(total_amt)/count(order_id),2) as avg_total_per_order,
+round (count(order_id)/count(distinct user_id),2) as avg_orders_per_user
+from orders
