@@ -1,0 +1,6 @@
+select 
+sum(costs),
+date_trunc ('month', created_at) as month
+from costs c 
+group by month
+order by month
