@@ -1,0 +1,5 @@
+select sum(total_amt),
+date_trunc('month', paid_at) as month 
+from orders o 
+group by month
+order by month
