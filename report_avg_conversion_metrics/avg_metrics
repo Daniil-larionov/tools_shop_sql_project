@@ -1,0 +1,18 @@
+WITH t1 AS (
+    SELECT 
+        COUNT(DISTINCT u.user_id) AS num_of_users,
+        COUNT(e.event_id) AS num_of_item_views,
+        COUNT(e.event_id) / COUNT(DISTINCT u.user_id) AS avg_views_per_user,
+        COUNT(DISTINCT o.order_id) AS num_of_orders
+    FROM users AS u
+    LEFT JOIN events AS e ON e.user_id = u.user_id
+    LEFT JOIN orders AS o ON o.user_id = u.user_id
+    WHERE e.event_name = 'view_item'
+)
+SELECT 
+    num_of_users,
+    num_of_item_views,
+    avg_views_per_user,
+    num_of_orders,
+    (CAST(num_of_orders AS FLOAT) / num_of_item_views) * 100 AS conversion_rate_from_views_to_orders
+FROM t1;
