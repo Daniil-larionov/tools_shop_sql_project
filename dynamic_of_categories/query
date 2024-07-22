@@ -1,0 +1,9 @@
+select 
+category,
+date_trunc('month', o.paid_at) as month,
+count(order_id) as num_of_orders,
+sum(o.total_amt) as sum_of_amt
+from items as i 
+left join order_x_item as oxi on i.item_id = oxi.item_id 
+left join orders as o on oxi.invoice_id = o.order_id 
+group by category, month 
