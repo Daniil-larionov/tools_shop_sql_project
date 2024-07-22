@@ -1,0 +1,14 @@
+WITH t1 AS (
+    SELECT 
+        COUNT(user_id) AS num_of_users,
+        DATE_TRUNC('month', created_at) AS month
+    FROM users
+    GROUP BY month
+    ORDER BY month
+)
+SELECT 
+    t1.month,
+    t1.num_of_users,
+    LAG(t1.num_of_users, 1) OVER (ORDER BY t1.month) AS previous_month,
+    t1.num_of_users::numeric / LAG(t1.num_of_users, 1) OVER (ORDER BY t1.month) AS user_growth
+FROM t1;
